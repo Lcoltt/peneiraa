@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração Fúria FC</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="F.ico.ico" type="image/x-icon">
+</head>
+<body>
+    <nav aria-label="Menu de navegação">
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="inscricao.html">Inscrição</a></li>
+            <li><a href="relatorio.html">Relatórios</a></li>
+            <li><a href="conteudo.html">Conteúdo</a></li>
+            <li><a href="administracao.html">Administração</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>Login Coordenador</h1>
+    </header>
+
+    <main>
+        <section>
+            <form id="formLogin">
+                <label for="usuario">Usuário:</label>
+                <input type="text" id="usuario" name="usuario" required><br>
+
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required><br>
+
+                <button type="submit">Entrar</button>
+            </form>
+
+            <div class="error-message" style="display:none; color: red;">Usuário ou senha incorretos.</div>
+        </section>
+    </main>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

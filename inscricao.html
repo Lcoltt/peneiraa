@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscrição Fúria FC</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="F.ico.ico" type="image/x-icon">
+</head>
+<body>
+    <nav aria-label="Menu de navegação">
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="inscricao.html">Inscrição</a></li>
+            <li><a href="relatorio.html">Relatórios</a></li>
+            <li><a href="conteudo.html">Conteúdo</a></li>
+            <li><a href="administracao.html">Administração</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>Formulário de Inscrição</h1>
+    </header>
+
+    <main>
+        <section>
+            <form id="formInscricao">
+                <label for="nome">Nome Completo:</label>
+                <input type="text" id="nome" name="nome" required><br>
+
+                <label for="altura">Altura:</label>
+                <input type="text" id="altura" name="altura" pattern="^(\d{1,2}(\.\d{1,2})?)$" title="Insira uma altura válida (ex: 1.75)" required><br>
+
+                <label for="peso">Peso:</label>
+                <input type="text" id="peso" name="peso" pattern="^\d{2,3}$" title="Insira um peso válido (ex: 70)" required><br>
+
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Digite um CPF válido" required><br>
+
+                <label for="posicao">Posição:</label>
+                <input type="text" id="posicao" name="posicao" required><br>
+
+                <button type="submit">Enviar Inscrição</button>
+            </form>
+
+            <div class="error-message" style="display:none; color: red;">Por favor, preencha todos os campos corretamente.</div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Peneira Fúria FC. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

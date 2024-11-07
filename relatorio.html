@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatorio Fúria  FC</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="F.ico.ico" type="image/x-icon">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="inscricao.html">Inscrição</a></li>
+            <li><a href="relatorio.html">Relatórios</a></li>
+            <li><a href="conteudo.html">Conteúdo</a></li>
+            <li><a href="administracao.html">Administração</a></li>
+        </ul>
+    </nav>
+    <header>
+        <h1>Inscrições</h1>
+    </header>
+    <section>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Altura</th>
+                    <th>Peso</th>
+                    <th>CPF</th>
+                    <th>Posição</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaRelatorios">
+                
+            </tbody>
+        </table>
+    </section>
+    <footer>
+        <p>&copy; 2024 Peneira Fúria FC. Todos os direitos reservados.</p>
+    </footer>
+    <script> 
+    const inscricoes = JSON.parse(localStorage.getItem('inscricao')) || [];
+        const tabela = document.getElementById('tabelaRelatorios');
+        
+        inscricoes.forEach(dados => {
+            const novaLinha = tabela.insertRow();
+            novaLinha.insertCell(0).innerText = dados.nome;
+            novaLinha.insertCell(1).innerText = dados.altura;
+            novaLinha.insertCell(2).innerText = dados.peso;
+            novaLinha.insertCell(3).innerText = dados.cpf;
+            novaLinha.insertCell(4).innerText = dados.posicao;
+        });
+        </script>
+    <script src="scripts.js"></script> 
+</body>
+</html>

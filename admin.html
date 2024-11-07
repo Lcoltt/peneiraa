@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração - Fúria FC</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="F.ico.ico" type="image/x-icon">
+</head>
+<body>
+    <nav aria-label="Menu de navegação">
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="inscricao.html">Inscrição</a></li>
+            <li><a href="relatorio.html">Relatórios</a></li>
+            <li><a href="conteudo.html">Conteúdo</a></li>
+            <li><a href="administracao.html">Administração</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>Administração</h1>
+        <p>Veja as inscrições</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Inscrições Realizadas</h2>
+            <table id="tabelaAdmin">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Altura</th>
+                        <th>Peso</th>
+                        <th>CPF</th>
+                        <th>Posição</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+            
+        </section>
+
+        <section>
+            <button id="logoutButton">Sair</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Peneira Fúria FC. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+// Verificação de login na página de administração
+if (window.location.pathname === '/admin.html') {
+    // Verifica se o usuário está logado
+    if (localStorage.getItem('loggedIn') !== 'true') {
+        // Redireciona para a página de login caso o usuário não esteja logado
+        window.location.href = 'administracao.html';
+    }
+
+    // Carregar as inscrições na tabela da página de admin
+    const inscricoes = JSON.parse(localStorage.getItem('inscricao')) || [];
+    const tabelaAdmin = document.getElementById('tabelaAdmin');
+
+    // Função para renderizar as inscrições na tabela
+    function renderizarTabela() {
+        tabelaAdmin.innerHTML = '';  // Limpa a tabela antes de preenchê-la
+        if (inscricoes.length === 0) {
+            const linhaVazia = tabelaAdmin.insertRow();
+            const celulaVazia = linhaVazia.insertCell(0);
+            celulaVazia.colSpan = 6;
+            celulaVazia.innerText = 'Nenhuma inscrição encontrada.';
+        } else {
+            inscricoes.forEach((dados, index) => {
+                const novaLinha = tabelaAdmin.insertRow();
+                novaLinha.insertCell(0).innerText = dados.nome;
+                novaLinha.insertCell(1).innerText = dados.altura;
+                novaLinha.insertCell(2).innerText = dados.peso;
+                novaLinha.insertCell(3).innerText = dados.cpf;
+                novaLinha.insertCell(4).innerText = dados.posicao;
+
+                const celulaAcoes = novaLinha.insertCell(5);
+                // Botões de Editar e Excluir
+                const editarButton = document.createElement('button');
+                editarButton.innerText = 'Editar';
+                editarButton.addEventListener('click', () => editarInscricao(index));
+
+                const excluirButton = document.createElement('button');
+                excluirButton.innerText = 'Excluir';
+                excluirButton.addEventListener('click', () => excluirInscricao(index));
+
+                celulaAcoes.appendChild(editarButton);
+                celulaAcoes.appendChild(excluirButton);
+            });
+        }
+    }
+
+    // Função de edição
+    function editarInscricao(index) {
+        const inscricao = inscricoes[index];
+
+        // Preenche os campos do formulário com os dados da inscrição
+        const nome = prompt('Nome Completo:', inscricao.nome);
+        const altura = prompt('Altura:', inscricao.altura);
+        const peso = prompt('Peso:', inscricao.peso);
+        const cpf = prompt('CPF:', inscricao.cpf);
+        const posicao = prompt('Posição:', inscricao.posicao);
+
+        if (nome && altura && peso && cpf && posicao) {
+            // Atualiza a inscrição
+            inscricoes[index] = { nome, altura, peso, cpf, posicao };
+            localStorage.setItem('inscricao', JSON.stringify(inscricoes));
+            renderizarTabela();  // Atualiza a tabela
+        }
+    }
+
+    // Função de exclusão
+    function excluirInscricao(index) {
+        if (confirm('Tem certeza que deseja excluir esta inscrição?')) {
+            // Remove a inscrição
+            inscricoes.splice(index, 1);
+            localStorage.setItem('inscricao', JSON.stringify(inscricoes));
+            renderizarTabela();  // Atualiza a tabela
+        }
+    }
+
+    // Função de logout
+    const logoutButton = document.getElementById('logoutButton');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', function() {
+            localStorage.removeItem('loggedIn');  // Remove o status de login
+            window.location.href = 'administracao.html';  // Redireciona para o login
+        });
+    }
+
+    renderizarTabela();  // Chama a função para renderizar as inscrições
+
+}
+
+// Função de login
+const formLogin = document.getElementById('formLogin');
+if (formLogin) { 
+    formLogin.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const usuario = document.getElementById('usuario').value;
+        const senha = document.getElementById('senha').value;
+
+        // Verificação de login
+        if (usuario === 'coordenador' && senha === '1234') {
+            // Grava o status de login no localStorage
+            localStorage.setItem('loggedIn', 'true');
+            window.location.href = 'admin.html';  // Redireciona para a página de administração
+        } else {
+            // Exibe uma mensagem de erro se o login estiver errado
+            const errorMessage = document.createElement('p');
+            errorMessage.innerText = 'Usuário ou senha incorretos!';
+            errorMessage.style.color = 'red';
+            document.body.appendChild(errorMessage);
+        }
+    });
+}
+
+// Função de inscrição
+const formInscricao = document.getElementById('formInscricao');
+if (formInscricao) {
+    formInscricao.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const nome = document.getElementById('nome').value;
+        const altura = document.getElementById('altura').value;
+        const peso = document.getElementById('peso').value;
+        const cpf = document.getElementById('cpf').value;
+        const posicao = document.getElementById('posicao').value;
+
+        const dados = { nome, altura, peso, cpf, posicao };
+        
+        let inscricoes = JSON.parse(localStorage.getItem('inscricao')) || [];
+        inscricoes.push(dados);
+        localStorage.setItem('inscricao', JSON.stringify(inscricoes));
+        
+        // Limpa o formulário após a inscrição
+        formInscricao.reset(); 
+    });
+}
+});
+
+    </script>
+</body>
+</html>
